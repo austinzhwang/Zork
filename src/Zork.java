@@ -1,3 +1,9 @@
+/**
+ * Zork is a simple text based adventure game where the user goes through different rooms that contain various items.
+ * Users can move in the directions specified by the program and have the chance of encountering the "secret" room.
+ * Austin Wang
+ */
+
 import java.util.Map;
 import java.util.Scanner;
 import java.util.HashMap;
@@ -17,6 +23,7 @@ public class Zork {
         exit();
     }
 
+    // Method starts the game
     public static void startGame() {
         String dir = "q";
         int room = 1;
@@ -55,6 +62,7 @@ public class Zork {
         } while (true);
     }
 
+    // 1. Foyer
     public static int foyer(String dir) {
         int roomNum = 1;
         String roomName = "foyer", items = "dead scorpion", canMove = "Direction: N | Room #: 2";
@@ -70,6 +78,8 @@ public class Zork {
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
 
+        // Switches to the specified room or exits the program depending on user input.
+        // Checks to make sure user has inputted a valid direction.
         switch(dir.toLowerCase()) {
             case "n":
                 roomNum = 2;
@@ -84,6 +94,7 @@ public class Zork {
         return roomNum;
     }
 
+    // 2. Front Room
     public static int frontRoom(String dir) {
         int roomNum = 2;
         String roomName = "front room", items = "piano", canMove = "Direction: S | Room #: 1\n" +
@@ -94,6 +105,8 @@ public class Zork {
         roomItems.put(roomNum, items);
         visitedArray[1] = true;
 
+        // Switches to the specified room or exits the program depending on user input.
+        // Checks to make sure user has inputted a valid direction.
         System.out.println("You are currently in the " + roomNames.get(roomNum));
         System.out.println("The " + roomNames.get(roomNum) + " contains " + roomItems.get(roomNum));
         System.out.println("You can move in the following directions: ");
@@ -121,6 +134,7 @@ public class Zork {
         return roomNum;
     }
 
+    // 3. Library
     public static int library(String dir) {
         int roomNum = 3;
         String roomName = "library", items = "spiders", canMove = "Direction: E | Room #: 2\n" +
@@ -136,6 +150,8 @@ public class Zork {
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
 
+        // Switches to the specified room or exits the program depending on user input.
+        // Checks to make sure user has inputted a valid direction.
         switch(dir.toLowerCase()) {
             case "e":
                 roomNum = 2;
@@ -153,6 +169,7 @@ public class Zork {
         return roomNum;
     }
 
+    // 4. Kitchen
     public static int kitchen(String dir) {
         int roomNum = 4;
         String roomName = "kitchen", items = "bats", canMove = "Direction: W | Room #: 2\n" +
@@ -168,6 +185,8 @@ public class Zork {
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
 
+        // Switches to the specified room or exits the program depending on user input.
+        // Checks to make sure user has inputted a valid direction.
         switch(dir.toLowerCase()) {
             case "w":
                 roomNum = 2;
@@ -185,6 +204,7 @@ public class Zork {
         return roomNum;
     }
 
+    // 5. Dining Room
     public static int diningRoom(String dir) {
         int roomNum = 5;
         String roomName = "dining room", items = "dust & empty box", canMove = "Direction: S | Room #: 3";
@@ -199,6 +219,8 @@ public class Zork {
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
 
+        // Switches to the specified room or exits the program depending on user input.
+        // Checks to make sure user has inputted a valid direction.
         switch(dir.toLowerCase()) {
             case "s":
                 roomNum = 3;
@@ -213,6 +235,7 @@ public class Zork {
         return roomNum;
     }
 
+    // 6. Vault
     public static int vault(String dir) {
         int roomNum = 6;
         String roomName = "vault", items = "3 walking skeletons", canMove;
@@ -234,6 +257,9 @@ public class Zork {
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
 
+        // Checks to see if the secret room appears (25% chance)
+        // Switches to the specified room or exits the program depending on user input.
+        // Checks to make sure user has inputted a valid direction.
         switch(dir.toLowerCase()) {
 
             case "e":
@@ -268,6 +294,7 @@ public class Zork {
         return roomNum;
     }
 
+    // 7. Parlor
     public static int parlor(String dir) {
         int roomNum = 7;
         String roomName = "parlor", items = "treasure chest", canMove = "Direction: W | Room #: 6\n" +
@@ -283,6 +310,8 @@ public class Zork {
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
 
+        // Switches to the specified room or exits the program depending on user input.
+        // Checks to make sure user has inputted a valid direction.
         switch(dir.toLowerCase()) {
             case "w":
                 roomNum = 6;
@@ -300,6 +329,7 @@ public class Zork {
         return roomNum;
     }
 
+    // 8. Secret room
     public static int secretRoom(String dir) {
         int roomNum = 8;
         String roomName = "secret room", items = "piles of gold", canMove = "Direction: W | Room #: 6";
@@ -314,6 +344,8 @@ public class Zork {
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
 
+        // Switches to the specified room or exits the program depending on user input.
+        // Checks to make sure user has inputted a valid direction.
         switch(dir.toLowerCase()) {
             case "w":
                 roomNum = 6;
@@ -329,9 +361,10 @@ public class Zork {
     }
 
     // Outputs the amount of rooms the user has visited and also has a 25% chance of displaying a message that a ghost
-    // has followed them.
+    // has followed them. Exits the program afterwards.
     public static void exit() {
         int visitedCount = 0;
+        // Sums the rooms the user has visited by checking to see which indexes are true in visitedArray
         for (int i = 0; i < visitedArray.length; i++) {
             if (visitedArray[i] == true) {
                     visitedCount++;
