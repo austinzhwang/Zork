@@ -4,19 +4,22 @@
  * Austin Wang
  */
 
-import java.util.Map;
-import java.util.Scanner;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class Zork {
 
     private static Scanner in = new Scanner(System.in);
     private static Map<Integer, String> roomNames = new HashMap<>();
     private static Map<Integer, String> roomItems = new HashMap<>();
+    private static Set<String> itemsSeen = new LinkedHashSet<>();
     private static Random rand = new Random();
     private static boolean isSecretRmAvail = false;
     private static boolean [] visitedArray = new boolean [8];
+    private static boolean [] isMoneyTaken = new boolean [8];
+    private static int [] moneyArray = new int [8];
+    private static int moneyCollected = 0;
+    private static String character = "Zork";
+    private static int setCharRoom = 1 + rand.nextInt(9);
 
     public static void main (String[] args) {
         startGame();
@@ -64,15 +67,38 @@ public class Zork {
 
     // 1. Foyer
     private static int foyer(String dir) {
-        int roomNum = 1;
-        String roomName = "foyer", items = "dead scorpion", canMove = "Direction: N | Room #: 2";
+        int roomNum = 1, moneyAvail = rand.nextInt(10001);
+        String roomName = "foyer", items = "dead scorpion", canMove = "Direction: N | Room #: 2", takeMoney = "";
 
         roomNames.put(roomNum, roomName);
         roomItems.put(roomNum, items);
         visitedArray[0] = true;
+        itemsSeen.add(roomItems.get(roomNum));
 
         System.out.println("You are currently in the " + roomNames.get(roomNum));
         System.out.println("The " + roomNames.get(roomNum) + " contains " + roomItems.get(roomNum));
+
+        if (isMoneyTaken[0] == false) {
+            System.out.println("You have found $" + moneyAvail);
+            System.out.print("Would you like to take the money? (y/n): ");
+            takeMoney = in.nextLine();
+            isMoneyTaken[0] = true;
+        }
+        if (takeMoney.equalsIgnoreCase("y")) {
+            moneyCollected += moneyAvail;
+            moneyArray[0] = moneyAvail;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        } else {
+            moneyCollected += 0;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        }
+        if (isMoneyTaken[0]) {
+            moneyArray[0] = 0;
+        }
+        if (setCharRoom == roomNum) {
+            System.out.println(character + " has appeared and took all your money! ");
+            moneyCollected = 0;
+        }
         System.out.println("You can move in the following directions: ");
         System.out.println(canMove);
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
@@ -96,19 +122,41 @@ public class Zork {
 
     // 2. Front Room
     private static int frontRoom(String dir) {
-        int roomNum = 2;
+        int roomNum = 2, moneyAvail = rand.nextInt(10001);
         String roomName = "front room", items = "piano", canMove = "Direction: S | Room #: 1\n" +
                 "Direction: W | Room #: 3\n" +
-                "Direction: E | Room #: 4";
+                "Direction: E | Room #: 4", takeMoney = "";
 
         roomNames.put(roomNum, roomName);
         roomItems.put(roomNum, items);
         visitedArray[1] = true;
+        itemsSeen.add(roomItems.get(roomNum));
 
         // Switches to the specified room or exits the program depending on user input.
         // Checks to make sure user has inputted a valid direction.
         System.out.println("You are currently in the " + roomNames.get(roomNum));
         System.out.println("The " + roomNames.get(roomNum) + " contains " + roomItems.get(roomNum));
+        if (isMoneyTaken[1] == false) {
+            System.out.println("You have found $" + moneyAvail);
+            System.out.print("Would you like to take the money? (y/n): ");
+            takeMoney = in.nextLine();
+            isMoneyTaken[1] = true;
+        }
+        if (takeMoney.equalsIgnoreCase("y")) {
+            moneyCollected += moneyAvail;
+            moneyArray[1] = moneyAvail;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        } else {
+            moneyCollected += 0;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        }
+        if (isMoneyTaken[1]) {
+            moneyArray[1] = 0;
+        }
+        if (setCharRoom == roomNum) {
+            System.out.println(character + " has appeared and took all your money! ");
+            moneyCollected = 0;
+        }
         System.out.println("You can move in the following directions: ");
         System.out.println(canMove);
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
@@ -136,16 +184,39 @@ public class Zork {
 
     // 3. Library
     private static int library(String dir) {
-        int roomNum = 3;
+        int roomNum = 3, moneyAvail = rand.nextInt(10001);
         String roomName = "library", items = "spiders", canMove = "Direction: E | Room #: 2\n" +
-                "Direction: N | Room #: 5";
+                "Direction: N | Room #: 5", takeMoney = "";
 
         roomNames.put(roomNum, roomName);
         roomItems.put(roomNum, items);
         visitedArray[2] = true;
+        itemsSeen.add(roomItems.get(roomNum));
 
         System.out.println("You are currently in the " + roomNames.get(roomNum));
         System.out.println("The " + roomNames.get(roomNum) + " contains " + roomItems.get(roomNum));
+        if (isMoneyTaken[2] == false) {
+            System.out.println("You have found $" + moneyAvail);
+            System.out.print("Would you like to take the money? (y/n): ");
+            takeMoney = in.nextLine();
+            isMoneyTaken[2] = true;
+        }
+        if (takeMoney.equalsIgnoreCase("y")) {
+            moneyCollected += moneyAvail;
+            moneyArray[2] = moneyAvail;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        } else {
+            moneyCollected += 0;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        }
+        if (isMoneyTaken[2]) {
+            moneyArray[2] = 0;
+        }
+        if (setCharRoom == roomNum) {
+            System.out.println(character + " has appeared and took all your money! ");
+            moneyCollected = 0;
+        }
+        System.out.println("You can move in the following directions: ");
         System.out.println(canMove);
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
@@ -171,16 +242,39 @@ public class Zork {
 
     // 4. Kitchen
     private static int kitchen(String dir) {
-        int roomNum = 4;
+        int roomNum = 4, moneyAvail = rand.nextInt(10001);
         String roomName = "kitchen", items = "bats", canMove = "Direction: W | Room #: 2\n" +
-                "Direction: N | Room #: 7";
+                "Direction: N | Room #: 7", takeMoney = "";
 
         roomNames.put(roomNum, roomName);
         roomItems.put(roomNum, items);
         visitedArray[3] = true;
+        itemsSeen.add(roomItems.get(roomNum));
 
         System.out.println("You are currently in the " + roomNames.get(roomNum));
         System.out.println("The " + roomNames.get(roomNum) + " contains " + roomItems.get(roomNum));
+        if (isMoneyTaken[3] == false) {
+            System.out.println("You have found $" + moneyAvail);
+            System.out.print("Would you like to take the money? (y/n): ");
+            takeMoney = in.nextLine();
+            isMoneyTaken[3] = true;
+        }
+        if (takeMoney.equalsIgnoreCase("y")) {
+            moneyCollected += moneyAvail;
+            moneyArray[3] = moneyAvail;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        } else {
+            moneyCollected += 0;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        }
+        if (isMoneyTaken[3]) {
+            moneyArray[3] = 0;
+        }
+        if (setCharRoom == roomNum) {
+            System.out.println(character + " has appeared and took all your money! ");
+            moneyCollected = 0;
+        }
+        System.out.println("You can move in the following directions: ");
         System.out.println(canMove);
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
@@ -206,15 +300,38 @@ public class Zork {
 
     // 5. Dining Room
     private static int diningRoom(String dir) {
-        int roomNum = 5;
-        String roomName = "dining room", items = "dust & empty box", canMove = "Direction: S | Room #: 3";
+        int roomNum = 5, moneyAvail = rand.nextInt(10001);
+        String roomName = "dining room", items = "dust & empty box", canMove = "Direction: S | Room #: 3", takeMoney = "";
 
         roomNames.put(roomNum, roomName);
         roomItems.put(roomNum, items);
         visitedArray[4] = true;
+        itemsSeen.add(roomItems.get(roomNum));
 
         System.out.println("You are currently in the " + roomNames.get(roomNum));
         System.out.println("The " + roomNames.get(roomNum) + " contains " + roomItems.get(roomNum));
+        if (isMoneyTaken[4] == false) {
+            System.out.println("You have found $" + moneyAvail);
+            System.out.print("Would you like to take the money? (y/n): ");
+            takeMoney = in.nextLine();
+            isMoneyTaken[4] = true;
+        }
+        if (takeMoney.equalsIgnoreCase("y")) {
+            moneyCollected += moneyAvail;
+            moneyArray[4] = moneyAvail;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        } else {
+            moneyCollected += 0;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        }
+        if (isMoneyTaken[4]) {
+            moneyArray[4] = 0;
+        }
+        if (setCharRoom == roomNum) {
+            System.out.println(character + " has appeared and took all your money! ");
+            moneyCollected = 0;
+        }
+        System.out.println("You can move in the following directions: ");
         System.out.println(canMove);
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
@@ -237,9 +354,9 @@ public class Zork {
 
     // 6. Vault
     private static int vault(String dir) {
-        int roomNum = 6;
-        String roomName = "vault", items = "3 walking skeletons", canMove;
-        if (rand.nextDouble() < 0.25) {
+        int roomNum = 6, moneyAvail = rand.nextInt(10001);
+        String roomName = "vault", items = "3 walking skeletons", canMove, takeMoney = "";
+        if (rand.nextDouble() < 0.25 || isSecretRmAvail) {
             canMove = "Direction: E | Room #: 7\n" +
                     "Direction: E | Room #: 8";
             isSecretRmAvail = true;
@@ -250,9 +367,32 @@ public class Zork {
         roomNames.put(roomNum, roomName);
         roomItems.put(roomNum, items);
         visitedArray[5] = true;
+        itemsSeen.add(roomItems.get(roomNum));
 
         System.out.println("You are currently in the " + roomNames.get(roomNum));
         System.out.println("The " + roomNames.get(roomNum) + " contains " + roomItems.get(roomNum));
+        if (isMoneyTaken[5] == false) {
+            System.out.println("You have found $" + moneyAvail);
+            System.out.print("Would you like to take the money? (y/n): ");
+            takeMoney = in.nextLine();
+            isMoneyTaken[5] = true;
+        }
+        if (takeMoney.equalsIgnoreCase("y")) {
+            moneyCollected += moneyAvail;
+            moneyArray[5] = moneyAvail;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        } else {
+            moneyCollected += 0;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        }
+        if (isMoneyTaken[5]) {
+            moneyArray[5] = 0;
+        }
+        if (setCharRoom == roomNum) {
+            System.out.println(character + " has appeared and took all your money! ");
+            moneyCollected = 0;
+        }
+        System.out.println("You can move in the following directions: ");
         System.out.println(canMove);
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
@@ -296,16 +436,39 @@ public class Zork {
 
     // 7. Parlor
     private static int parlor(String dir) {
-        int roomNum = 7;
+        int roomNum = 7, moneyAvail = rand.nextInt(10001);
         String roomName = "parlor", items = "treasure chest", canMove = "Direction: W | Room #: 6\n" +
-                "Direction: S | Room #: 4";
+                "Direction: S | Room #: 4", takeMoney = "";
 
         roomNames.put(roomNum, roomName);
         roomItems.put(roomNum, items);
         visitedArray[6] = true;
+        itemsSeen.add(roomItems.get(roomNum));
 
         System.out.println("You are currently in the " + roomNames.get(roomNum));
         System.out.println("The " + roomNames.get(roomNum) + " contains " + roomItems.get(roomNum));
+        if (isMoneyTaken[6] == false) {
+            System.out.println("You have found $" + moneyAvail);
+            System.out.print("Would you like to take the money? (y/n): ");
+            takeMoney = in.nextLine();
+            isMoneyTaken[6] = true;
+        }
+        if (takeMoney.equalsIgnoreCase("y")) {
+            moneyCollected += moneyAvail;
+            moneyArray[6] = moneyAvail;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        } else {
+            moneyCollected += 0;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        }
+        if (isMoneyTaken[6]) {
+            moneyArray[6] = 0;
+        }
+        if (setCharRoom == roomNum) {
+            System.out.println(character + " has appeared and took all your money! ");
+            moneyCollected = 0;
+        }
+        System.out.println("You can move in the following directions: ");
         System.out.println(canMove);
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
@@ -331,15 +494,38 @@ public class Zork {
 
     // 8. Secret room
     private static int secretRoom(String dir) {
-        int roomNum = 8;
-        String roomName = "secret room", items = "piles of gold", canMove = "Direction: W | Room #: 6";
+        int roomNum = 8, moneyAvail = rand.nextInt(10001);
+        String roomName = "secret room", items = "piles of gold", canMove = "Direction: W | Room #: 6", takeMoney = "";
 
         roomNames.put(roomNum, roomName);
         roomItems.put(roomNum, items);
         visitedArray[7] = true;
+        itemsSeen.add(roomItems.get(roomNum));
 
         System.out.println("You are currently in the " + roomNames.get(roomNum));
         System.out.println("The " + roomNames.get(roomNum) + " contains " + roomItems.get(roomNum));
+        if (isMoneyTaken[7] == false) {
+            System.out.println("You have found $" + moneyAvail);
+            System.out.print("Would you like to take the money? (y/n): ");
+            takeMoney = in.nextLine();
+            isMoneyTaken[7] = true;
+        }
+        if (takeMoney.equalsIgnoreCase("y")) {
+            moneyCollected += moneyAvail;
+            moneyArray[7] = moneyAvail;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        } else {
+            moneyCollected += 0;
+            System.out.println("You have collected $" + moneyCollected + " so far");
+        }
+        if (isMoneyTaken[7]) {
+            moneyArray[7] = 0;
+        }
+        if (setCharRoom == roomNum) {
+            System.out.println(character + " has appeared and took all your money! ");
+            moneyCollected = 0;
+        }
+        System.out.println("You can move in the following directions: ");
         System.out.println(canMove);
         System.out.print("Which direction would you like to move in? (enter q to quit): ");
         dir = in.nextLine();
@@ -370,7 +556,14 @@ public class Zork {
                 visitedCount++;
             }
         }
-        System.out.println("You have visited " + visitedCount + " rooms");
+        System.out.println("================================================================");
+        System.out.println("You have visited: " + visitedCount + " rooms");
+        System.out.print("You have seen the following items: " );
+        for (String s : itemsSeen) {
+            System.out.print(s + " ");
+        }
+        System.out.println();
+        System.out.println("You have collected a total of: $" + moneyCollected);
         if (rand.nextDouble() < 0.25) {
             System.out.println("A ghost has followed you!");
         }
